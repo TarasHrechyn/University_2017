@@ -10,6 +10,15 @@ namespace PowerCalcClasses
     {
         static void Main(string[] args)
         {
+            // створення примірника моделі даних системи
+            PowerGridData gridData = new PowerGridData();
+
+            // створення примірника візуального інтерфкйсу
+            PowerGridConsoleUI gridUI = new PowerGridConsoleUI(gridData);
+
+            // старт візуального інтерфейсу користувача
+            gridUI.ExecuteMainLoop();
         }
     }
 }
+
