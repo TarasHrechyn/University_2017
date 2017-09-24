@@ -43,7 +43,7 @@ namespace PowerConsumptionCalc
             return res.ToString();
         }
 
-        static void ConsoleDemo()
+        static void ConsoleDemoReadWrite()
         {
             // відображення статичного тексту
             Console.WriteLine("Розрахунок властивостей кола:");
@@ -58,7 +58,8 @@ namespace PowerConsumptionCalc
             double length = 2 * 3.14 * radius;
 
             // відображення статичного тексту, змінної та результату виразу
-            Console.WriteLine("Для кола радіусом {0}, його довжина становитеме {1} та площа {2}", radius, length, radius * radius * 3.14);
+            Console.WriteLine("Для кола радіусом {0}, його довжина становитеме {1} та площа {2}", 
+                radius, length, radius * radius * 3.14);
         }
 
         static void ConsoleDemoReadKey()
