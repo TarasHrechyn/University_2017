@@ -6,7 +6,7 @@ namespace PowerConsumptionCalc
     {
         static void Main(string[] args)
         {
-            // організація циклу для читання та опрацювання натисненої клавіші
+            // організація циклу для читання та опрацювання коду натисненої клавіші
             bool programTerminated = false;
             while (!programTerminated)
             {
