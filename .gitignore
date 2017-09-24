@@ -1,3 +1,5 @@
 Lab1-Console/PowerConsumptionCalc/PowerConsumptionCalc/bin/Debug/
 Lab1-Console/PowerConsumptionCalc/PowerConsumptionCalc/obj/
 *.suo
+*.cache
+Lab1-Console/PowerConsumptionCalc/PowerCalcClasses/obj/
