@@ -174,6 +174,23 @@ namespace PowerConsumptionCalc
             return res;
         }
 
+        void ProcB()
+        {
+            int B = 0;
+        }
+        void ProcA()
+        {
+            int A1 = 0;
+            ProcB();
+            int A2 = 0;
+        }
+
+        void Main()
+        {
+            int M;
+            ProcA();
+        }
+
 
     }
 }
