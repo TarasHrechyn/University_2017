@@ -201,15 +201,6 @@ namespace PowerConsumptionCalc
             return m + 1;
         }
 
-        void PowerDemo()
-        {
-            // опис змінної потужності p1
-            Power p1 = new Power(900, 500);
-            // опис змінної потужності p2
-            Power p2 = new Power(100, 200);
-            // опис змінної та розрахунок суми потужностей
-            Power pSum = p1 + p2;
-        }
     }
 
     

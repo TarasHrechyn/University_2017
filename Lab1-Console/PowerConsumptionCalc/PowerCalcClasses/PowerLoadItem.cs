@@ -39,13 +39,31 @@ namespace PowerCalcClasses
         public Voltage voltage;
         public Power power;
 
+        // очищення значення потужності
+        public void Clear()
+        {
+            power = new Power(0.0, 0.0);
+        }
+
+        // перевірка чи потужність є нульовою
+        public bool IsEmpty()
+        {
+            return (power.S == 0.0);
+        }
+
+        // перевірка чи потужність є вказана 
+        public bool IsDefined()
+        {
+            return (power.S > 0.0);
+        }
+
+
         // конструктор за замовчуванням
         public LoadItem()
         {
             power = new Power(0, 0);
             voltage = Voltage.v220;
         }
-
         // конструктор з параметрами
         public LoadItem(Power initialPower, Voltage initialVoltage = Voltage.v220)
         {
@@ -67,5 +85,6 @@ namespace PowerCalcClasses
                 power = new Power(power.P * newS / prevS, power.Q * newS / prevS); 
             }
         }
+
     }
 }

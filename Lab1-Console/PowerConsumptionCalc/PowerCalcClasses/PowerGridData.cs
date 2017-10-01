@@ -9,14 +9,16 @@ namespace PowerCalcClasses
     class PowerGridData
     {
         public string Name = "Підстанція";
+        // перелік навантаження
         public List<LoadItem> loadItems = new List<LoadItem>();
-        void Save()
+        //
+        public void Save()
         {
 
         }
-        void Load()
+        // 
+        public void Load()
         {
-
         }
     }
 }
