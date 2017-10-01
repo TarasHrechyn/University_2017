@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassesDemo.cs" />
     <Compile Include="PowerGridConsoleUI.cs" />
     <Compile Include="PowerGridData.cs" />
     <Compile Include="PowerLoadItem.cs" />

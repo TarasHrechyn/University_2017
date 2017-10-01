@@ -174,23 +174,44 @@ namespace PowerConsumptionCalc
             return res;
         }
 
+        // оголошення константи
+        const int constDemo = 9;
+
         void ProcB()
         {
-            int B = 0;
+            // оголошення змінної всередині методу
+            int simpleVar = 5 + constDemo;
+            // оголошення змінної та створення масиву
+            int[] intArray = new int[] {1, 4, -29, simpleVar, 0xFF };
+            // оголошення стрічкової змінної
+            string testStr = "string demo";
         }
+
         void ProcA()
         {
-            int A1 = 0;
+            int a1 = 0;
             ProcB();
             int A2 = 0;
         }
 
-        void Main()
+        int Main()
         {
-            int M;
+            int m = 0;
             ProcA();
+            return m + 1;
         }
 
-
+        void PowerDemo()
+        {
+            // опис змінної потужності p1
+            Power p1 = new Power(900, 500);
+            // опис змінної потужності p2
+            Power p2 = new Power(100, 200);
+            // опис змінної та розрахунок суми потужностей
+            Power pSum = p1 + p2;
+        }
     }
+
+    
+
 }
