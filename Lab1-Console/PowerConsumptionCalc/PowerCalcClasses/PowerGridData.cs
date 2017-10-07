@@ -11,6 +11,18 @@ namespace PowerCalcClasses
         public string Name = "Підстанція";
         // перелік навантаження
         public List<LoadItem> loadItems = new List<LoadItem>();
+        public Power PowerSum
+        {
+            get {
+                Power res = new Power();
+                foreach (LoadItem load in loadItems)
+                {
+                    res = res + load.power;
+                }
+                return res;
+            }
+        }
+
         //
         public void Save()
         {
