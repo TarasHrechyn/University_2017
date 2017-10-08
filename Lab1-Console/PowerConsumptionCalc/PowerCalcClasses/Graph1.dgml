@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="9993cb72-b1ee-4e52-8f49-9dde8e3e4c1e1" Bounds="513.105167698925,-121.911666205324,73.0133333333333,25.96" Label="Load Item" UseManualLocation="True" />
+    <Node Id="CapacitorBank" Bounds="567.535303445435,-54.5316162053243,99.4433333333334,25.96" Label="Capacitor Bank" UseManualLocation="True" />
+    <Node Id="LoadItem" Bounds="273.873743284098,64.8283837946757,73.0133333333333,25.96" Label="Load Item" />
+    <Node Id="Main" Bounds="285.380409950765,-103.051616205324,50,25.96" />
+    <Node Id="Project" Bounds="276.843743284098,8.8683837946757,67.0733333333333,25.96" Label="GridData" />
+    <Node Id="Project1" Bounds="165.752076617432,-143.051616205324,201.135,253.84" Group="Expanded" Label="Project" />
+    <Node Id="RegularLoad" Bounds="448.248636780657,-56.3515662053243,89.2866666666666,25.96" Label="Regular Load" UseManualLocation="True" />
+    <Node Id="UserInterface" Bounds="185.752076617432,-47.0916162053243,93.2566666666667,25.96" Label="User Interface" />
+  </Nodes>
+  <Links>
+    <Link Source="CapacitorBank" Target="9993cb72-b1ee-4e52-8f49-9dde8e3e4c1e1" Bounds="569.019340003473,-89.6002107972587,35.2065544934891,35.0685941285576" />
+    <Link Source="Main" Target="Project" Bounds="310.380401611328,-77.0916137695313,0,76.9599975645542" />
+    <Link Source="Main" Target="UserInterface" Bounds="257.785308837891,-77.0916137695313,34.5028991699219,24.7536125183105" />
+    <Link Source="Project" Target="LoadItem" Bounds="310.380401611328,34.8283843994141,0,21" />
+    <Link Source="Project1" Target="LoadItem" Category="Contains" />
+    <Link Source="Project1" Target="Main" Category="Contains" />
+    <Link Source="Project1" Target="Project" Category="Contains" />
+    <Link Source="Project1" Target="UserInterface" Category="Contains" />
+    <Link Source="RegularLoad" Target="9993cb72-b1ee-4e52-8f49-9dde8e3e4c1e1" Bounds="504.121710585251,-89.1453867832147,28.3718548259775,32.7938209644281" />
+    <Link Source="UserInterface" Target="Project" Bounds="250.472625732422,-21.1316165924072,34.5028991699219,24.7536141872406" />
+  </Links>
+  <Categories>
+    <Category Id="Contains" Label="Contains" Description="Whether the source of the link contains the target object" CanBeDataDriven="False" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Contained By" IsContainment="True" OutgoingActionLabel="Contains" />
+  </Categories>
+  <Properties>
+    <Property Id="Bounds" DataType="System.Windows.Rect" />
+    <Property Id="CanBeDataDriven" Label="CanBeDataDriven" Description="CanBeDataDriven" DataType="System.Boolean" />
+    <Property Id="CanLinkedNodesBeDataDriven" Label="CanLinkedNodesBeDataDriven" Description="CanLinkedNodesBeDataDriven" DataType="System.Boolean" />
+    <Property Id="Expression" DataType="System.String" />
+    <Property Id="Group" Label="Group" Description="Display the node as a group" DataType="Microsoft.VisualStudio.GraphModel.GraphGroupStyle" />
+    <Property Id="GroupLabel" DataType="System.String" />
+    <Property Id="IncomingActionLabel" Label="IncomingActionLabel" Description="IncomingActionLabel" DataType="System.String" />
+    <Property Id="IsContainment" DataType="System.Boolean" />
+    <Property Id="IsEnabled" DataType="System.Boolean" />
+    <Property Id="Label" Label="Label" Description="Displayable label of an Annotatable object" DataType="System.String" />
+    <Property Id="OutgoingActionLabel" Label="OutgoingActionLabel" Description="OutgoingActionLabel" DataType="System.String" />
+    <Property Id="TargetType" DataType="System.Type" />
+    <Property Id="UseManualLocation" DataType="System.Boolean" />
+    <Property Id="Value" DataType="System.String" />
+    <Property Id="ValueLabel" DataType="System.String" />
+  </Properties>
+  <Styles>
+    <Style TargetType="Node" GroupLabel="Comment" ValueLabel="Has comment">
+      <Condition Expression="HasCategory('Comment')" />
+      <Setter Property="Background" Value="#FFFFFACD" />
+      <Setter Property="Stroke" Value="#FFE5C365" />
+      <Setter Property="StrokeThickness" Value="1" />
+      <Setter Property="NodeRadius" Value="2" />
+      <Setter Property="MaxWidth" Value="250" />
+    </Style>
+  </Styles>
+</DirectedGraph>

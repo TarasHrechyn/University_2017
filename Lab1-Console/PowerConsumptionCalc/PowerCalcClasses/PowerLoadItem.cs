@@ -37,10 +37,37 @@ namespace PowerCalcClasses
     // опис узагальненого навантаження
     public class LoadItem
     {
-        // поля для зберігання даних
-        public string code;
-        public Voltage voltage;
-        public Power power;
+        // віртуальна функція - початковий опис
+        protected virtual string GetPropsDisplayName()
+        {
+            return "V=" + voltage.ToString();
+        }
+        // переозначена стандартна функція
+        public override string ToString()
+        {
+            return code + ": " + GetPropsDisplayName();
+        }
+
+        // прості властивості для зберігання даних
+        public string code { get; set; }
+        public Voltage voltage { get; set; }
+        public Power power { get; set; }
+
+        // обчислювальна властивість струму
+        public double Current
+        {
+            get
+            {
+                return power.S / (int)voltage;
+            }
+            set
+            {
+                double newS = value * (int)voltage;
+                double prevS = power.S;
+                power = new Power(power.P * newS / prevS, power.Q * newS / prevS);
+            }
+        }
+
         // очищення значення потужності
         public void Clear()
         {
@@ -71,31 +98,7 @@ namespace PowerCalcClasses
             power = initialPower;
             voltage = ratedVoltage;
         }
-        // обчислювальна властивість струму
-        public double Current
-        {
-            get
-            {
-                return power.S / (int)voltage;
-            }
-            set
-            {
-                double newS = value * (int)voltage;
-                double prevS = power.S;
-                power = new Power(power.P * newS / prevS, power.Q * newS / prevS); 
-            }
-        }
 
-        // віртуальна функція - початковий опис
-        protected virtual string GetPropsDisplayName() 
-        {
-            return "V=" + voltage.ToString();
-        }
-        // переозначена стандартна функція
-        public override string ToString()
-        {
-            return code + ": " + GetPropsDisplayName();
-        }
     }
 
     // опис классу звичайного навантаження, успадкований від узагальненого елементу навантаження
@@ -103,7 +106,6 @@ namespace PowerCalcClasses
     {
         // додаткове поле
         public string customer;
-
         // переозначення конструктора та виклик конструктора з базового класу
         public RegularLoad(string code, string customer, double P, double Q, Voltage ratedVoltage = Voltage.v220):
             base(code, new Power(P, Q), ratedVoltage)        
@@ -114,7 +116,8 @@ namespace PowerCalcClasses
         // віртуальна функція - переозначена
         protected override string GetPropsDisplayName()
         {
-            return base.GetPropsDisplayName() + ", P=" + power.P.ToString("0.0") + ", Q=" + power.Q.ToString("0.0") + ", споживач: " + customer;
+            return base.GetPropsDisplayName() + ", P=" + power.P.ToString("0.0") + ", Q=" + power.Q.ToString("0.0") 
+                + ", споживач: " + customer;
         }
     }
 

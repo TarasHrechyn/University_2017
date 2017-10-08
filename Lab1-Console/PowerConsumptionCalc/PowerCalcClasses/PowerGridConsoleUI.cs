@@ -9,7 +9,7 @@ namespace PowerCalcClasses
     class PowerGridConsoleUI
     {
         // посилання на редаговану модель
-        private PowerGridData gridData;
+        private PowerGridData gridData { get; set; }
 
         // конструктор для створення примірника візуального інтерфейсу
         public PowerGridConsoleUI(PowerGridData refGridData)
@@ -71,7 +71,7 @@ namespace PowerCalcClasses
                     CalcCapacitorBanks();
                     break;
                 case ConsoleKey.F9:
-                    Print();
+                    PrintCompleteList();
                     break;
                 case ConsoleKey.Escape:
                     res = true;
@@ -124,7 +124,7 @@ namespace PowerCalcClasses
 
                 CapacitorBank bank = new CapacitorBank("БК" + index.ToString(), "unknown type", bankQ);
                 gridData.loadItems.Add(bank);
-                Print();
+                PrintCompleteList();
             }
             else
             {
@@ -133,7 +133,7 @@ namespace PowerCalcClasses
         }
 
         // роздруку списку
-        public void Print()
+        public void PrintCompleteList()
         {
             Console.WriteLine("Підстанція");
             Console.WriteLine("---------------------------------------");

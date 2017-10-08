@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="PowerCalcClasses.LoadItem">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABBAAAAAAQAAAAEAACAAIAAIAEAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>PowerLoadItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PowerCalcClasses.RegularLoad" Collapsed="true">
+    <Position X="4" Y="4" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PowerLoadItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PowerCalcClasses.PowerGridData">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAAARAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>PowerGridData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PowerCalcClasses.CapacitorBank">
+    <Position X="6.25" Y="1" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PowerLoadItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PowerCalcClasses.PowerGridConsoleUI">
+    <Position X="8.75" Y="0.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAIAAAAQAAYAAAAAAACAAAAEEAA=</HashCode>
+      <FileName>PowerGridConsoleUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
