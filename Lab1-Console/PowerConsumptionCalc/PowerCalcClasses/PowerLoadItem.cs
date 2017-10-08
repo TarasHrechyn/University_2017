@@ -38,7 +38,7 @@ namespace PowerCalcClasses
     public class LoadItem
     {
         // поля для зберігання даних
-        public string name;
+        public string code;
         public Voltage voltage;
         public Power power;
         // очищення значення потужності
@@ -56,17 +56,20 @@ namespace PowerCalcClasses
         {
             return (power.S > 0.0);
         }
-        // конструктор за замовчуванням
+        // конструктор за замовчуванням (без параметрів)
         public LoadItem()
         {
             power = new Power(0, 0);
             voltage = Voltage.v220;
         }
-        // конструктор з параметрами
-        public LoadItem(Power initialPower, Voltage initialVoltage = Voltage.v220)
+        // конструктор з параметрами який перевикористовується лише в успадкованих класах
+        protected LoadItem(string code, Power initialPower, Voltage ratedVoltage = Voltage.v220)
         {
+            // назви поля та параметру співпадає. 
+            this.code = code;
+            // назви різняться тому this не є обовязковим
             power = initialPower;
-            voltage = initialVoltage;
+            voltage = ratedVoltage;
         }
         // обчислювальна властивість струму
         public double Current
@@ -83,33 +86,50 @@ namespace PowerCalcClasses
             }
         }
 
-        public virtual string DisplayName() 
+        // віртуальна функція - початковий опис
+        protected virtual string GetPropsDisplayName() 
         {
-            return name + ", V=" + voltage.ToString();
+            return "V=" + voltage.ToString();
         }
-    }
-    
-    // опис типу звичайного навантаження
-    public class RegularLoad: LoadItem
-    {
-        public string customer;        
-        public override string DisplayName()
+        // переозначена стандартна функція
+        public override string ToString()
         {
-            return base.DisplayName() + ", P=" + power.P.ToString("0.0") + ", Q=" + power.Q.ToString("0.0") + ", споживач: " + customer;
+            return code + ": " + GetPropsDisplayName();
         }
     }
 
-    // опис конденсаторної батареї
+    // опис классу звичайного навантаження, успадкований від узагальненого елементу навантаження
+    public class RegularLoad: LoadItem
+    {
+        // додаткове поле
+        public string customer;
+
+        // переозначення конструктора та виклик конструктора з базового класу
+        public RegularLoad(string code, string customer, double P, double Q, Voltage ratedVoltage = Voltage.v220):
+            base(code, new Power(P, Q), ratedVoltage)        
+        {
+            this.customer = customer;
+        }
+
+        // віртуальна функція - переозначена
+        protected override string GetPropsDisplayName()
+        {
+            return base.GetPropsDisplayName() + ", P=" + power.P.ToString("0.0") + ", Q=" + power.Q.ToString("0.0") + ", споживач: " + customer;
+        }
+    }
+
+    // опис классу конденсаторної батареї
     public class CapacitorBank : LoadItem
     {
         public string type;
-        public CapacitorBank()
+        public CapacitorBank(string code, string type, double Q, Voltage ratedVoltage = Voltage.v220) : 
+            base(code, new Power(0, -Math.Abs(Q)), ratedVoltage)
         {
-            power = new Power(0, 1000);
+            this.type = type;            
         }
-        public override string DisplayName()
+        protected override string GetPropsDisplayName()
         {
-            return base.DisplayName() + ", Q=" + power.Q.ToString("0.0") + ", тип КБ:" + type;
+            return base.GetPropsDisplayName() + ", Q=" + (power.Q * -1).ToString("0.0") + ", тип КБ:" + type;
         }
     }
 }

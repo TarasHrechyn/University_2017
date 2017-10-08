@@ -39,12 +39,15 @@ namespace PowerCalcClasses
         // вивід на ектан тексту підказки головного меню
         private void PrintHelp()
         {
+            Console.Clear();
             Console.WriteLine("Розрахунок навантаження");
             Console.WriteLine("F2 - Запис на диск");
             Console.WriteLine("F5 - Ввід даних про нового споживача");
-            Console.WriteLine("F6 - Ввід даних про компенсування реактивної потужності");
-            Console.WriteLine("F9 - Розрахунок переліку та сумарного навантаження");
+            Console.WriteLine("F6 - Ввід даних про компенсування РП");
+            Console.WriteLine("F8 - Добавити компенсування РП");
+            Console.WriteLine("F9 - Роздрук переліку та сумарного навантаження");
             Console.WriteLine("Esc - Завершення роботи програми");
+            Console.WriteLine();
         }
 
         // функція опрацювання команд. повертає True у випадку натиснення клавіші Esc
@@ -64,6 +67,9 @@ namespace PowerCalcClasses
                     LoadItem bank = InputCapacitorBank(); 
                     gridData.loadItems.Add(bank);
                     break;
+                case ConsoleKey.F8:
+                    CalcCapacitorBanks();
+                    break;
                 case ConsoleKey.F9:
                     Print();
                     break;
@@ -75,35 +81,55 @@ namespace PowerCalcClasses
             }
             return res;
         }
+
         // процедура введення даних про споживача
         public LoadItem InputRegularLoad()
         {
+            // ввід даних у локальні змінні
+            Console.Write("Код Споживача: ");
+            string code = Console.ReadLine();
+            Console.Write("Назва споживача: ");
+            string customer = Console.ReadLine();
+            Console.Write("P, кВт: ");
+            double P = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Q, кВАр: ");
+            double Q = Convert.ToDouble(Console.ReadLine());
             // створення примірника
-            RegularLoad load = new RegularLoad();
-            // ввід даних
-            Console.WriteLine("Код Спожтвача: ");
-            load.name = Console.ReadLine();
-            Console.WriteLine("P, кВт: ");
-            load.power.P = Convert.ToDouble(Console.ReadLine());
-            Console.WriteLine("Q, кВАР: ");
-            load.power.Q = Convert.ToDouble(Console.ReadLine());
-            Console.WriteLine("Назва споживача: ");
-            load.customer = Console.ReadLine();
+            RegularLoad load = new RegularLoad(code, customer, P, Q);
             return load;
         }
-        // процедура введення даних про КБ
+        // процедура введення даних про наявну КБ
         public LoadItem InputCapacitorBank()
         {
-            // створення примірника
-            CapacitorBank bank = new CapacitorBank();
             // ввід даних
-            Console.WriteLine("Код КБ: ");
-            bank.name = Console.ReadLine();
-            Console.WriteLine("Q, кВАР: ");
-            bank.power.Q = Convert.ToDouble(Console.ReadLine());
-            Console.WriteLine("Тип КБ: ");
-            bank.type = Console.ReadLine();
+            Console.Write("Код КБ: ");
+            string code = Console.ReadLine();
+            Console.Write("Тип КБ: ");
+            string type = Console.ReadLine();
+            Console.Write("Q, кВАр: ");
+            double Q = Convert.ToDouble(Console.ReadLine());
+            // створення примірника
+            CapacitorBank bank = new CapacitorBank(code, type, Q);
             return bank;
+        }
+
+        // обчислення доцільності компенсування РП
+        private void CalcCapacitorBanks()
+        {
+            Power powerSum = gridData.PowerSum;
+            if (powerSum.Q > 0)
+            {
+                int index = gridData.loadItems.Count + 1;
+                double bankQ = Math.Round(powerSum.Q / 100) * 100;
+
+                CapacitorBank bank = new CapacitorBank("БК" + index.ToString(), "unknown type", bankQ);
+                gridData.loadItems.Add(bank);
+                Print();
+            }
+            else
+            {
+                Console.WriteLine("Немає потреби у компенсуванні РП");
+            }
         }
 
         // роздруку списку
@@ -113,7 +139,7 @@ namespace PowerCalcClasses
             Console.WriteLine("---------------------------------------");
             foreach (LoadItem load in gridData.loadItems)
             {
-                Console.WriteLine(load.DisplayName());
+                Console.WriteLine(load.ToString());
             }
             Console.WriteLine("---------------------------------------");
             Power powerSum = gridData.PowerSum;
