@@ -21,6 +21,7 @@ namespace PowerCalcClasses
         public void ExecuteMainLoop()
         {
             bool done;
+            Console.Title = "Навантаження Підстанції";
             do
             {
                 // роздрук підказки меню
@@ -31,6 +32,7 @@ namespace PowerCalcClasses
                 done = HandleKey(keyInfo.Key);
                 if (!done)
                 {
+                    Console.WriteLine("\nНатиснiть довiльну клавiшу");
                     Console.ReadKey();
                 }
             } while (!done);
@@ -40,12 +42,14 @@ namespace PowerCalcClasses
         private void PrintHelp()
         {
             Console.Clear();
-            Console.WriteLine("Розрахунок навантаження");
+            Console.WriteLine("\nВиберiть Операцiю\n");
+            Console.WriteLine("F1 - Довiдка");
             Console.WriteLine("F2 - Запис на диск");
+            Console.WriteLine("F3 - Вiдновлення з диску");
             Console.WriteLine("F5 - Ввід даних про нового споживача");
             Console.WriteLine("F6 - Ввід даних про компенсування РП");
             Console.WriteLine("F8 - Добавити компенсування РП");
-            Console.WriteLine("F9 - Роздрук переліку та сумарного навантаження");
+            Console.WriteLine("F9 - Роздрук перелiку та сумарного навантаження");
             Console.WriteLine("Esc - Завершення роботи програми");
             Console.WriteLine();
         }
@@ -57,15 +61,32 @@ namespace PowerCalcClasses
             switch (key)
             {
                 case ConsoleKey.F2:
-                    gridData.Save();
+                    try
+                    {
+                        gridData.Save();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Помилка збереження файла: {0}", e.Message);
+                    }
+                    break;
+                case ConsoleKey.F3:
+                    try
+                    {
+                        gridData.Load();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Помилка читання файла: {0}", e.Message);
+                    }
                     break;
                 case ConsoleKey.F5:
                     LoadItem load = InputRegularLoad();
-                    gridData.loadItems.Add(load);
+                    gridData.model.items.Add(load);
                     break;
                 case ConsoleKey.F6:
                     LoadItem bank = InputCapacitorBank(); 
-                    gridData.loadItems.Add(bank);
+                    gridData.model.items.Add(bank);
                     break;
                 case ConsoleKey.F8:
                     CalcCapacitorBanks();
@@ -119,11 +140,11 @@ namespace PowerCalcClasses
             Power powerSum = gridData.PowerSum;
             if (powerSum.Q > 0)
             {
-                int index = gridData.loadItems.Count + 1;
+                int index = gridData.model.items.Count + 1;
                 double bankQ = Math.Round(powerSum.Q / 100) * 100;
 
                 CapacitorBank bank = new CapacitorBank("БК" + index.ToString(), "unknown type", bankQ);
-                gridData.loadItems.Add(bank);
+                gridData.model.items.Add(bank);
                 PrintCompleteList();
             }
             else
@@ -137,7 +158,7 @@ namespace PowerCalcClasses
         {
             Console.WriteLine("Підстанція");
             Console.WriteLine("---------------------------------------");
-            foreach (LoadItem load in gridData.loadItems)
+            foreach (LoadItem load in gridData.model.items)
             {
                 Console.WriteLine(load.ToString());
             }

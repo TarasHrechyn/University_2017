@@ -3,17 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace PowerCalcClasses
 {
+
     // перелічуваний тип - перелік стандартних номінальних напруг
+    [Serializable]
     public enum Voltage : int { v220 = 220, v380 = 380 };
 
     // структура опису потужності
+    [Serializable]
     public struct Power
     {
         // фізичні поля для зберігання даних
+        [XmlAttribute]
         public double P;
+        [XmlAttribute]
         public double Q;
         // опис конструктора ініціалізації
         public Power(double p, double q)
@@ -33,10 +41,22 @@ namespace PowerCalcClasses
             return new Power(p1.P + p2.P, p1.Q + p2.Q);
         }
     }
+    
+    [XmlInclude(typeof(LoadItem))]
+    [XmlInclude(typeof(RegularLoad))]
+    [XmlInclude(typeof(CapacitorBank))]
 
     // опис узагальненого навантаження
+    [Serializable]
     public class LoadItem
     {
+        // конструктор за замовчуванням (без параметрів)
+        public LoadItem()
+        {
+            power = new Power(0, 0);
+            voltage = Voltage.v220;
+        }
+
         // віртуальна функція - початковий опис
         protected virtual string GetPropsDisplayName()
         {
@@ -49,11 +69,18 @@ namespace PowerCalcClasses
         }
 
         // прості властивості для зберігання даних
-        public string code { get; set; }
-        public Voltage voltage { get; set; }
-        public Power power { get; set; }
+        [XmlAttribute]
+        public string code;// { get; set; }
 
-        // обчислювальна властивість струму
+        // серіалізація атрибута
+        [XmlAttribute]
+        public Voltage voltage;
+
+        // серіалізація структури як елемента
+        public Power power;
+
+        // обчислювальна властивість струму. Не серіалізується
+        [XmlIgnore]
         public double Current
         {
             get
@@ -83,12 +110,6 @@ namespace PowerCalcClasses
         {
             return (power.S > 0.0);
         }
-        // конструктор за замовчуванням (без параметрів)
-        public LoadItem()
-        {
-            power = new Power(0, 0);
-            voltage = Voltage.v220;
-        }
         // конструктор з параметрами який перевикористовується лише в успадкованих класах
         protected LoadItem(string code, Power initialPower, Voltage ratedVoltage = Voltage.v220)
         {
@@ -102,13 +123,19 @@ namespace PowerCalcClasses
     }
 
     // опис классу звичайного навантаження, успадкований від узагальненого елементу навантаження
+    [Serializable]
     public class RegularLoad: LoadItem
     {
         // додаткове поле
+        [XmlAttribute]
         public string customer;
+        // переозначення конструктора за умовчанням
+        public RegularLoad(): base()
+        {
+        }
         // переозначення конструктора та виклик конструктора з базового класу
-        public RegularLoad(string code, string customer, double P, double Q, Voltage ratedVoltage = Voltage.v220):
-            base(code, new Power(P, Q), ratedVoltage)        
+        public RegularLoad(string code, string customer, double P, double Q, Voltage ratedVoltage = Voltage.v220) :
+            base(code, new Power(P, Q), ratedVoltage)
         {
             this.customer = customer;
         }
@@ -122,9 +149,17 @@ namespace PowerCalcClasses
     }
 
     // опис классу конденсаторної батареї
+    [Serializable]
     public class CapacitorBank : LoadItem
     {
+        [XmlAttribute]
         public string type;
+        // переозначення конструктора за умовчанням
+        public CapacitorBank(): base()
+        {
+        }
+
+        // переозначення конструктора 
         public CapacitorBank(string code, string type, double Q, Voltage ratedVoltage = Voltage.v220) : 
             base(code, new Power(0, -Math.Abs(Q)), ratedVoltage)
         {
