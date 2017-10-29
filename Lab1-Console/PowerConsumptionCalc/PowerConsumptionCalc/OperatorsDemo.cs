@@ -174,6 +174,11 @@ namespace PowerConsumptionCalc
             return res;
         }
 
+	static int SelectionDemoCondition(int number)
+        {
+            int res = (number == 1) ? (1000) : ((number == 0) ? (800) : (5));
+            return res;
+        }
 
     }
 }
