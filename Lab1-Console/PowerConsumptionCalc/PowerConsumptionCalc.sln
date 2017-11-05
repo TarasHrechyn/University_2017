@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppDemo", "PowerCons
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerCalcClasses", "PowerCalcClasses\PowerCalcClasses.csproj", "{4282A90B-793B-475E-85B1-3BCC620BA85D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerCalcForWindows", "PowerCalcForWindows\PowerCalcForWindows.csproj", "{83772A59-547B-4569-9E61-FE8091C3E48E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{4282A90B-793B-475E-85B1-3BCC620BA85D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4282A90B-793B-475E-85B1-3BCC620BA85D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4282A90B-793B-475E-85B1-3BCC620BA85D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83772A59-547B-4569-9E61-FE8091C3E48E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83772A59-547B-4569-9E61-FE8091C3E48E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83772A59-547B-4569-9E61-FE8091C3E48E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83772A59-547B-4569-9E61-FE8091C3E48E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
