@@ -117,9 +117,13 @@ namespace PowerCalcForWindows
 
         private void menuEditAddLoad_Click(object sender, RoutedEventArgs e)
         {
-            PowerCalcClasses.RegularLoad load = new PowerCalcClasses.RegularLoad("Н1", "Споживач", 1, 0.3);
-            data.model.items.Add(load);
-            UpdateView(false);
+            LoadInputDlg dlg = new LoadInputDlg();
+            if (dlg.ShowDialog() == true)
+            {
+                LoadItem load = dlg.CreateNewLoad();
+                data.model.items.Add(load);
+                UpdateView(false);
+            }
         }
         
         private void menuEditAddKB_Click(object sender, RoutedEventArgs e)
@@ -127,6 +131,15 @@ namespace PowerCalcForWindows
             PowerCalcClasses.CapacitorBank bank = new PowerCalcClasses.CapacitorBank("В1", "Батарея", 1);
             data.model.items.Add(bank);
             UpdateView(false);
+        }
+
+        private void menuEditDelete_Click(object sender, RoutedEventArgs e)
+        {
+//            for (int i = 0; i < listView.Items.Count; i++)
+//            {
+//                listView.Items[i]
+//                if (listView.Items[i].)
+//            }
         }
     }
 }

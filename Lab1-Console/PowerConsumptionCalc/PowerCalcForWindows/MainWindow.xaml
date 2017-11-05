@@ -24,6 +24,8 @@
             <MenuItem Header="Редагувати"  x:Name="menuEdit">
                 <MenuItem Header="Добавити Навантаження" x:Name="menuEditAddLoad" Click="menuEditAddLoad_Click" />
                 <MenuItem Header="Добавити КБ" x:Name="menuEditAddKB" Click="menuEditAddKB_Click" />
+                <Separator/>
+                <MenuItem Header="Видалити" x:Name="menuEditDelete" Click="menuEditDelete_Click" />
             </MenuItem>
             <MenuItem Header="Довідка"  x:Name="menuAbout" Click="menuAbout_Click"/>
         </Menu>
