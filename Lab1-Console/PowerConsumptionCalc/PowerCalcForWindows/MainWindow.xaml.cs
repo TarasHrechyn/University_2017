@@ -12,14 +12,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using PowerCalcClasses;
 using Microsoft.Win32;
+using PowerCalcClasses;
 
 namespace PowerCalcForWindows
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public PowerGridData data = new PowerGridData();
@@ -135,11 +132,12 @@ namespace PowerCalcForWindows
 
         private void menuEditDelete_Click(object sender, RoutedEventArgs e)
         {
-//            for (int i = 0; i < listView.Items.Count; i++)
-//            {
-//                listView.Items[i]
-//                if (listView.Items[i].)
-//            }
+            int idx = listView.SelectedIndex;
+            if (idx != -1)
+            {
+                data.model.items.Remove(data.model.items[idx]);
+            }            
+            UpdateView(false);
         }
     }
 }

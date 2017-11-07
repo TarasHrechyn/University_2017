@@ -77,8 +77,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PowerGridData.cs" />
-    <Compile Include="PowerLoadItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
