@@ -19,7 +19,7 @@
                 <MenuItem Header="Відкрити" x:Name="menuFileOpen" Click="menuFileOpen_Click" />
                 <MenuItem Header="Зберегти" x:Name="menuFileSave" Click="menuFileSave_Click" />
                 <Separator/>
-                <MenuItem x:Name="menuExit" Header="Вихід" Click="menuExit_Click"/>
+                <MenuItem x:Name="menuExit" Header="Вихід" Click="menuExit_Click" />
             </MenuItem>
             <MenuItem Header="Редагувати"  x:Name="menuEdit">
                 <MenuItem Header="Добавити Навантаження" x:Name="menuEditAddLoad" Click="menuEditAddLoad_Click" />
@@ -27,7 +27,7 @@
                 <Separator/>
                 <MenuItem Header="Видалити" x:Name="menuEditDelete" Click="menuEditDelete_Click" />
             </MenuItem>
-            <MenuItem Header="Довідка"  x:Name="menuAbout" Click="menuAbout_Click"/>
+            <MenuItem Header="Довідка"  x:Name="menuAbout" Click="menuAbout_Click" />
         </Menu>
         <ListView x:Name="listView" Grid.Column="1" Margin="1,23,5.6,10.4">
             <ListView.View>
