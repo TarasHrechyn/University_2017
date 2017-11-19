@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PowerGridDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="PowerGridDBModelStoreContainer">
+    <EntitySet Name="Buses" EntityType="PowerGridDBModel.Store.Buses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BusConnections" EntityType="PowerGridDBModel.Store.BusConnections" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="BusBusConnection" Association="PowerGridDBModel.Store.BusBusConnection">
+      <End Role="Bus" EntitySet="Buses" />
+      <End Role="BusConnection" EntitySet="BusConnections" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Buses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nchar" Nullable="true" MaxLength="20" />
+    <Property Name="Voltage" Type="int" Nullable="false" />
+    <Property Name="Installed" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BusConnections">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Name" Type="nchar" Nullable="true" MaxLength="10" />
+    <Property Name="P" Type="float" Nullable="true" />
+    <Property Name="Q" Type="float" Nullable="true" />
+    <Property Name="BusId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="BusBusConnection">
+    <End Role="Bus" Type="PowerGridDBModel.Store.Buses" Multiplicity="1" />
+    <End Role="BusConnection" Type="PowerGridDBModel.Store.BusConnections" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BusConnection">
+        <PropertyRef Name="BusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -13,7 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Win32;
-using PowerCalcClasses;
+using System.Data;
+using GridClassLibrary;
+
 
 namespace PowerCalcForWindows
 {
@@ -29,46 +31,20 @@ namespace PowerCalcForWindows
 
         void UpdateView(bool updateTitle)
         {
-            // оновлення списку
-            listView.Items.Clear();
-            foreach (PowerCalcClasses.LoadItem loadItem in data.model.items)
+            // очищеня списку
+            busesListView.Items.Clear();
+            // заповненя переліку шин
+            foreach (Bus bus in data.model.Buses)
             {
-                listView.Items.Add(loadItem.ToString());
+                busesListView.Items.Add(bus.Name.Trim() + " - " + bus.Voltage);
             }
-            // відображення підсумкової інформації
-            Power sSum = data.PowerSum;
-            labelTotal.Content =
-                "P: " + sSum.P.ToString() + "\n" +
-                "Q: " + sSum.Q.ToString();
 
-            if (updateTitle)
-            {
-                // Оновлення заголовку головного вікна
-                Title = "Навантаження - " + data.FileName;
-            }
+            // альтернативний вигляд переліку шин із використанянм DataGrid
+            busesDataGrid.ItemsSource = data.model.Buses.Local.ToList();
         }
 
         private void menuExit_Click(object sender, RoutedEventArgs e)
         {
-            string message = "Файл містить зміни. Чи бажаєте Ви їх зберегти?";
-            string caption = "Вихід з програми";
-            MessageBoxButton button = MessageBoxButton.YesNoCancel;
-            MessageBoxImage icon = MessageBoxImage.Question;
-            // виклик діалогу
-            MessageBoxResult result = MessageBox.Show(message, caption, button, icon);
-            switch (result)
-            {
-                case MessageBoxResult.Cancel:
-                    // Відміна виходу і повернення з процедури
-                    return;
-                case MessageBoxResult.Yes:
-                    // Запис моделі
-                    data.Save();
-                    break;
-                case MessageBoxResult.No:
-                    // вихід без запису
-                    break;
-            }    
             this.Close();
         }
 
@@ -78,66 +54,43 @@ namespace PowerCalcForWindows
                 + "Це є демонстраційна програма", "Про...");
         }
 
-        private void menuFileOpen_Click(object sender, RoutedEventArgs e)
-        {
-            // Створюємо та конфігуруємо діалог
-            OpenFileDialog dlg = new OpenFileDialog();
-
-            // назву Файла беремо з обєкта даних
-            dlg.FileName = data.FileName;                
-            dlg.DefaultExt = ".pwr";                     
-            dlg.Filter =  "Дані Мережі (.pwr)|*.pwr"; 
-
-            // Показ на екрані та отримання даних
-            Nullable<bool> result = dlg.ShowDialog();
-
-            // Process open file dialog box results
-            if (result == true)
-            {
-                // Відкриваємо документ
-                string fileName = dlg.FileName;
-                data.Load(fileName);
-                UpdateView(true);
-            }
-        }
-
-        private void menuFileSave_Click(object sender, RoutedEventArgs e)
-        {
-            data.Save();
-        }
-
-        private void menuFileNew_Click(object sender, RoutedEventArgs e)
-        {
-            data.NewModel();
-            UpdateView(true);
-        }
-
+                
         private void menuEditAddLoad_Click(object sender, RoutedEventArgs e)
         {
-            LoadInputDlg dlg = new LoadInputDlg();
-            if (dlg.ShowDialog() == true)
+            if (busesDataGrid.SelectedItem is Bus)
             {
-                LoadItem load = dlg.CreateNewLoad();
-                data.model.items.Add(load);
-                UpdateView(false);
+                Bus selectedBus = (Bus)busesDataGrid.SelectedItem;
+
+                LoadInputDlg dlg = new LoadInputDlg();
+                if (dlg.ShowDialog() == true)
+                {
+                    BusConnection connectedLoad = dlg.CreateNewLoad();
+
+                    connectedLoad.Bus = selectedBus;
+                    data.model.BusConnections.Add(connectedLoad);
+                    data.model.SaveChanges();
+                    UpdateView(false);
+                }
             }
-        }
-        
-        private void menuEditAddKB_Click(object sender, RoutedEventArgs e)
-        {
-            PowerCalcClasses.CapacitorBank bank = new PowerCalcClasses.CapacitorBank("В1", "Батарея", 1);
-            data.model.items.Add(bank);
-            UpdateView(false);
+            else
+            {
+                MessageBox.Show("Виберіть шину для якої створити приєднання", "Cтворення приєднання...");
+            }
         }
 
         private void menuEditDelete_Click(object sender, RoutedEventArgs e)
         {
-            int idx = listView.SelectedIndex;
-            if (idx != -1)
-            {
-                data.model.items.Remove(data.model.items[idx]);
-            }            
-            UpdateView(false);
+            //int idx = listView.SelectedIndex;
+            //if (idx != -1)
+           // {
+            //    data.model.BusConnections.Remove(data.model.items[idx]);
+            //}            
+            //UpdateView(false);
+        }
+
+        private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

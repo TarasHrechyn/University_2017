@@ -1,42 +1,43 @@
-﻿<Window x:Class="PowerCalcForWindows.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PowerCalcForWindows"
+        xmlns:GridClassLibrary="clr-namespace:GridClassLibrary;assembly=GridClassLibrary" x:Class="PowerCalcForWindows.MainWindow"
         mc:Ignorable="d"
         Title="Розрахунок Навантаження" d:DesignWidth="534.6" d:DesignHeight="313.8"    >
     <Grid >
         <Grid.ColumnDefinitions>
 
-            <ColumnDefinition Width="61*"/>
-            <ColumnDefinition Width="204*"/>
+            <ColumnDefinition Width="167*"/>
+            <ColumnDefinition Width="164*"/>
+            <ColumnDefinition Width="198*"/>
 
         </Grid.ColumnDefinitions>
         <Menu x:Name="menu" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.ColumnSpan="2" Height="18" Width="174"  >
             <MenuItem Header="Файл" x:Name="menuFile">
-                <MenuItem Header="Новий" x:Name="menuFileNew" Click="menuFileNew_Click"/>
-                <MenuItem Header="Відкрити" x:Name="menuFileOpen" Click="menuFileOpen_Click" />
-                <MenuItem Header="Зберегти" x:Name="menuFileSave" Click="menuFileSave_Click" />
-                <Separator/>
                 <MenuItem x:Name="menuExit" Header="Вихід" Click="menuExit_Click" />
             </MenuItem>
             <MenuItem Header="Редагувати"  x:Name="menuEdit">
                 <MenuItem Header="Добавити Навантаження" x:Name="menuEditAddLoad" Click="menuEditAddLoad_Click" />
-                <MenuItem Header="Добавити КБ" x:Name="menuEditAddKB" Click="menuEditAddKB_Click" />
                 <Separator/>
                 <MenuItem Header="Видалити" x:Name="menuEditDelete" Click="menuEditDelete_Click" />
             </MenuItem>
             <MenuItem Header="Довідка"  x:Name="menuAbout" Click="menuAbout_Click" />
         </Menu>
-        <ListView x:Name="listView" Grid.Column="1" Margin="1,23,5.6,10.4">
+        <ListView x:Name="busesListView" Grid.Column="2" Margin="9.8,18,9.6,169.4" SelectionChanged="listView_SelectionChanged">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Приєднання" />
+                    <GridViewColumn Header="Шини" />
                 </GridView>
             </ListView.View>
         </ListView>
-        <Label x:Name="labelTitle" Content="Сумарне &#xD;&#xA;Навантаження:" Margin="10,23,5,0" VerticalAlignment="Top" RenderTransformOrigin="0.223,0.832" Height="43" FontWeight="Bold"/>
+        <Label x:Name="labelTitle" Content="Сумарне &#xA;Навантаження:" Margin="10,23,5.2,0" VerticalAlignment="Top" RenderTransformOrigin="0.223,0.832" Height="43" FontWeight="Bold"/>
         <Label x:Name="labelTotal" Content="Дані P, Q" HorizontalAlignment="Left" Margin="14,77,0,0" VerticalAlignment="Top" Height="40" Width="98"/>
+        <DataGrid HorizontalAlignment="Left" VerticalAlignment="Top" Height="13" Width="12"/>
+        <DataGrid x:Name="busesDataGrid" Margin="9.8,18,11.2,163.4" Grid.Column="1" />
+
+        <DataGrid x:Name="connectionsDataGrid" Margin="9.8,171,9.6,10.4" Grid.Column="1" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>

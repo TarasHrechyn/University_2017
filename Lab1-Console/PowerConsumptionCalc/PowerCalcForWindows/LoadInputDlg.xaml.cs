@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using PowerCalcClasses;
+using GridClassLibrary;
 
 namespace PowerCalcForWindows
 {
@@ -31,12 +31,19 @@ namespace PowerCalcForWindows
             this.DialogResult = true;
         }
 
-        public LoadItem CreateNewLoad()
+        public BusConnection CreateNewLoad()
         {
-            double P = Convert.ToDouble(textP.Text);
-            double Q = Convert.ToDouble(textQ.Text);
-            return new RegularLoad(textCode.Text, textName.Text, P, Q);
+            // перетворення значень текстових полів до дійсних величин
+            double localP = Convert.ToDouble(textP.Text);
+            double localQ = Convert.ToDouble(textQ.Text);
+            // створення шинного приєднання та присвоєння початкових данів з діалогу
+            return new BusConnection()
+                {
+                    Code = textCode.Text,
+                    Name = textName.Text,
+                    P = localP,
+                    Q = localQ
+                };
         }
-
     }
 }
