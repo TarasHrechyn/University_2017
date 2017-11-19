@@ -41,6 +41,7 @@ namespace PowerCalcForWindows
 
             // альтернативний вигляд переліку шин із використанянм DataGrid
             busesDataGrid.ItemsSource = data.model.Buses.Local.ToList();
+           
         }
 
         private void menuExit_Click(object sender, RoutedEventArgs e)
@@ -57,19 +58,25 @@ namespace PowerCalcForWindows
                 
         private void menuEditAddLoad_Click(object sender, RoutedEventArgs e)
         {
+            // перевірка чи відзначено поточну шину
             if (busesDataGrid.SelectedItem is Bus)
             {
+                // отримання посилання на поточну шину
                 Bus selectedBus = (Bus)busesDataGrid.SelectedItem;
-
+                // показ діалогу
                 LoadInputDlg dlg = new LoadInputDlg();
                 if (dlg.ShowDialog() == true)
                 {
+                    // створення нового приєднання засобами класу діалогового вікна
                     BusConnection connectedLoad = dlg.CreateNewLoad();
-
+                    // присвоєння власника
                     connectedLoad.Bus = selectedBus;
+                    // добавлення приєднання в список приєднань шини
                     data.model.BusConnections.Add(connectedLoad);
+                    // запис змін в базу даних
                     data.model.SaveChanges();
-                    UpdateView(false);
+                    // оневлення даних таблиць
+                    UpdateView(false);                    
                 }
             }
             else
@@ -88,9 +95,38 @@ namespace PowerCalcForWindows
             //UpdateView(false);
         }
 
-        private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void busesDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (busesDataGrid.SelectedItem is Bus)
+            {
+                Bus selectedBus = (Bus)busesDataGrid.SelectedItem;
+                connectionsDataGrid.ItemsSource = selectedBus.BusConnections;
+            } else
+            {
+                connectionsDataGrid.ItemsSource = data.model.BusConnections.Local.ToList();
+            }
+            connectionsDataGrid.Columns[0].Visibility = Visibility.Hidden;
+            
+          
+        }
+
+        private void connectionsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void connectionsDataGrid_AutoGeneratingColumn(object sender, 
+            DataGridAutoGeneratingColumnEventArgs e)
+        {
+            string colName = e.Column.Header.ToString();
+            if ((colName == "Bus") || (colName == "Id") || (colName == "BusId"))
+            {
+                e.Column.Visibility = Visibility.Hidden;
+            } else
+            if (colName == "Name")
+            {
+                e.Column.Header = "Назва";
+            }
         }
     }
 }

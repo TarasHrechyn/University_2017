@@ -7,8 +7,12 @@
         mc:Ignorable="d"
         Title="Споживач" Height="212.487" Width="246.485">
     <Grid>
-        <Button x:Name="button" Content="Створити" IsDefault="true" HorizontalAlignment="Left" Margin="65,157,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
-        <Button x:Name="cancelButton" Content="Відмінити" IsCancel="true" HorizontalAlignment="Left" Margin="157,157,0,0" VerticalAlignment="Top" Width="75"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="147*"/>
+            <RowDefinition Height="38*"/>
+        </Grid.RowDefinitions>
+        <Button x:Name="button" Content="Створити" IsDefault="true" Margin="77,0,89.6,8.2" Click="button_Click" Grid.Row="1" Height="20" VerticalAlignment="Bottom"/>
+        <Button x:Name="cancelButton" Content="Відмінити" IsCancel="true" Margin="157,0,9.6,8.2" Grid.Row="1" Height="20" VerticalAlignment="Bottom"/>
         <Label x:Name="labelCode" Content="Код" HorizontalAlignment="Left" Margin="10,12,0,0" VerticalAlignment="Top" />
         <Label x:Name="labelName" Content="Назва" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" />
         <Label x:Name="labelP" Content="P " HorizontalAlignment="Left" Margin="10,77,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.53,0.469" />

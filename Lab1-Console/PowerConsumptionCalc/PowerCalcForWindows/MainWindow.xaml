@@ -26,7 +26,7 @@
             </MenuItem>
             <MenuItem Header="Довідка"  x:Name="menuAbout" Click="menuAbout_Click" />
         </Menu>
-        <ListView x:Name="busesListView" Grid.Column="2" Margin="9.8,18,9.6,169.4" SelectionChanged="listView_SelectionChanged">
+        <ListView x:Name="busesListView" Grid.Column="2" Margin="9.8,18,9.6,163.4" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Шини" />
@@ -36,8 +36,15 @@
         <Label x:Name="labelTitle" Content="Сумарне &#xA;Навантаження:" Margin="10,23,5.2,0" VerticalAlignment="Top" RenderTransformOrigin="0.223,0.832" Height="43" FontWeight="Bold"/>
         <Label x:Name="labelTotal" Content="Дані P, Q" HorizontalAlignment="Left" Margin="14,77,0,0" VerticalAlignment="Top" Height="40" Width="98"/>
         <DataGrid HorizontalAlignment="Left" VerticalAlignment="Top" Height="13" Width="12"/>
-        <DataGrid x:Name="busesDataGrid" Margin="9.8,18,11.2,163.4" Grid.Column="1" />
+        <DataGrid x:Name="busesDataGrid" Margin="9.8,18,11.2,163.4" Grid.Column="1" SelectionChanged="busesDataGrid_SelectionChanged" />
 
-        <DataGrid x:Name="connectionsDataGrid" Margin="9.8,171,9.6,10.4" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <DataGrid x:Name="connectionsDataGrid" Margin="9.8,171,9.6,10.4" Grid.Column="1" Grid.ColumnSpan="2" SelectionChanged="connectionsDataGrid_SelectionChanged" AutoGeneratingColumn="connectionsDataGrid_AutoGeneratingColumn">
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}"/>
+            </DataGrid.Columns>
+            <DataGrid.DataContext>
+                <GridClassLibrary:BusConnection BusId="-3"/>
+            </DataGrid.DataContext>
+        </DataGrid>
     </Grid>
 </Window>
