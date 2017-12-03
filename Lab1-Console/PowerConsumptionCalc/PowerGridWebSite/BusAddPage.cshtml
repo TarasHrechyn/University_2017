@@ -1,0 +1,55 @@
+﻿@{
+    // оновлення заголовка
+    Page.Title = "Новий Запис";
+    // використання головного вікна
+    Layout = "~/_SiteLayout.cshtml";
+    // перевірка правильності введених даних
+    Validation.RequireField("name", "Назва повинна бути визначена");
+    Validation.RequireField("voltage", "Не задано напругу шин");
+    Validation.RequireField("installed", "Дата встановлення не вказана");
+
+    // перевірка натиснення кнопки запису
+    if (IsPost && Validation.IsValid())
+    {
+        // копіювання полів запису із параметрів запиту форми редагування
+        var newBusName = Request.Form["name"];
+        var newBusVoltage = Convert.ToInt32(Request.Form["voltage"]);
+        var newBusDate = Convert.ToDateTime(Request.Form["installed"]);
+        // створення нового запису в базі даних
+        var db = new PowerGridDBEntities();
+        var newBus = new Bus()
+        { Name = newBusName, Voltage = newBusVoltage,Installed= newBusDate };
+        db.Buses.Add(newBus);
+        db.SaveChanges();
+        // повернення на сторінку списку після успішного запису
+        Response.Redirect("~/BusDataPage");
+    }
+}
+
+<div>
+    <h1>Добавлення інформації про шини</h1>
+    @Html.ValidationSummary()
+    <form method="post">
+        <fieldset>
+            <legend>Movie Information</legend>
+            <p>
+                <label for="name">Назва:</label>
+                <input type="text" name="name" value="@Request.Form["name"]" />               
+            </p>
+            <p>
+                <label for="voltage">Напруга:</label>
+                <select name="voltage" size="4" value="@Request.Form["voltage"]" >
+                    <option value="220">220 В</option>
+                    <option value="380">380 В</option>
+                    <option value="6300">6.3 кВ</option>
+                    <option value="10500">10.5 кВ</option>
+                </select>               
+            </p>
+            <p>
+                <label for="installed">Дата:</label>
+                <input type="date" name="installed" value="@Request.Form["installed"]" />
+            </p>
+            <p><input type="submit" name="buttonSubmit" value="Добавити Шини" /></p>
+        </fieldset>
+    </form>
+</div>

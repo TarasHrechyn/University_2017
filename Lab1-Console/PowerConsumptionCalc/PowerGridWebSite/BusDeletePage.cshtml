@@ -1,0 +1,34 @@
+﻿@{
+    // оновлення заголовка
+    Page.Title = "Видалення Запису";
+    Layout = "~/_SiteLayout.cshtml";
+    // отримання значення переданого параметра (ідентифікатор)
+    int busId = Convert.ToInt32(Request["id"]);
+    // отримання посилання на обєкт відповідний ідентифікатору
+    var db = new PowerGridDBEntities();
+    var busToDelete = db.Buses.Where(b => busId == b.Id).FirstOrDefault();
+
+    // перевірка натиснення кнопки видалення
+    if (IsPost)
+    {       
+        // видалення з таблиці шин та запис змін
+        db.Buses.Remove(busToDelete);
+        db.SaveChanges();
+        // повернення на сторінку списку після успішного запису
+        Response.Redirect("~/BusDataPage");
+    }
+}
+
+<div>
+    <h1>Видалення запису про шини</h1>
+    <form method="post" action="" name="form">
+        <p>Чи дійсно ви бажаєте видалити запис?</p>
+        <p>
+            <b>Назва: </b>@busToDelete.Name<br />
+            <b>Напруга: </b>@busToDelete.Voltage<br />
+        </p>
+        <p><input type="submit" value="Видалити" /></p>
+    </form>
+</div>
+
+

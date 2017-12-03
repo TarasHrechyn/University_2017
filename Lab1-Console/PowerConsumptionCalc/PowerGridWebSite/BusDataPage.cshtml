@@ -8,6 +8,7 @@
     <table>
         <thead>
             <tr>
+                <th></th>
                 <th>Id</th>
                 <th>Напруга</th>
                 <th>Назва</th>
@@ -17,14 +18,14 @@
             @foreach (Bus bus in data.Buses)
             {
                 <tr>
+                    <td><a href="~/BusDeletePage?id=@bus.Id">Видалити</a></td>
                     <td>@bus.Id</td>
-                    <td>@bus.Voltage.ToString()</td>
-                    <td>@bus.Name</td>                    
+                    <td>@string.Format("{0:0.0#} кВ", bus.Voltage/1000.0)</td>
+                    <td>@bus.Name</td>                            
                 </tr>
-            }
+            }           
         </tbody>
-    </table>
-
-    
+    </table>   
+    <div><a href="\BusAddPage">Додати</a></div>
 </div>
 
