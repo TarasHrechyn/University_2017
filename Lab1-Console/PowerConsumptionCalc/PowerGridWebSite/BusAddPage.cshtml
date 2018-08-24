@@ -17,6 +17,7 @@
         var newBusDate = Convert.ToDateTime(Request.Form["installed"]);
         // створення нового запису в базі даних
         var db = new PowerGridDBEntities();
+        d
         var newBus = new Bus()
         { Name = newBusName, Voltage = newBusVoltage,Installed= newBusDate };
         db.Buses.Add(newBus);
@@ -45,7 +46,7 @@
                     <option value="10500">10.5 кВ</option>
                 </select>               
             </p>
-            <p>
+            <p >
                 <label for="installed">Дата:</label>
                 <input type="date" name="installed" value="@Request.Form["installed"]" />
             </p>
